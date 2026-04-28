@@ -6,39 +6,36 @@ WebExtension that keeps your most recently activated tab (or tab group) at the e
 
 This repo now builds separate extension bundles for Firefox, Chrome, and Safari from the same source files.
 
-Run from the project root:
+Run from the project root.
 
-- `npm run build` to build all targets.
-- `npm run build:all` to build all targets.
-- `npm run build:firefox` to build only Firefox.
-- `npm run build:chrome` to build only Chrome.
-- `npm run build:safari` to build only Safari.
+### Quick start
 
-Single-target builds only refresh that target under `dist/` and keep other targets intact.
+- Build everything: npm run build
+- Build one target: npm run build:chrome (or build:firefox / build:safari)
+- Build and zip one target: npm run package:chrome (or package:firefox / package:safari)
 
-To generate zip archives for store upload:
+### All available npm commands
 
-- `npm run zip` to zip all current dist targets.
-- `npm run zip:firefox` to zip only Firefox.
-- `npm run zip:chrome` to zip only Chrome.
-- `npm run zip:safari` to zip only Safari.
+- `npm run build`: alias of `npm run build:all`.
+- `npm run build:all`: build all targets.
+- `npm run build:firefox`: build Firefox only.
+- `npm run build:chrome`: build Chrome only.
+- `npm run build:safari`: build Safari only.
+- `npm run zip`: zip all built targets currently in dist.
+- `npm run zip:firefox`: zip Firefox build only.
+- `npm run zip:chrome`: zip Chrome build only.
+- `npm run zip:safari`: zip Safari build only.
+- `npm run package`: run `build:all`, then zip all targets.
+- `npm run package:firefox`: build Firefox, then zip Firefox.
+- `npm run package:chrome`: build Chrome, then zip Chrome.
+- `npm run package:safari`: build Safari, then zip Safari.
 
-One-shot build + zip commands:
+Single-target builds only refresh that target under dist and keep other targets intact.
 
-- `npm run package`
-- `npm run package:firefox`
-- `npm run package:chrome`
-- `npm run package:safari`
+### Output folders
 
-Build output folders:
-
-- `dist/firefox`
-- `dist/chrome`
-- `dist/safari`
-
-Archive output folder:
-
-- `artifacts`
+- Build outputs: `dist/firefox`, `dist/chrome`, `dist/safari`.
+- Zip outputs: `artifacts/firefox.zip`, `artifacts/chrome.zip`, `artifacts/safari.zip`.
 
 ## Current behavior
 
