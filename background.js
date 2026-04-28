@@ -1,7 +1,8 @@
+const ext = globalThis.browser ?? globalThis.chrome;
 const inFlightByWindow = new Set();
 
 async function getSettings() {
-	const state = await browser.storage.local.get(["enabled", "sortSide"]);
+	const state = await ext.storage.local.get(["enabled", "sortSide"]);
 	return {
 		enabled: state.enabled !== false,
 		sortSide: state.sortSide === "end" ? "end" : "start",
@@ -9,7 +10,7 @@ async function getSettings() {
 }
 
 async function reapplyForWindow(windowId) {
-	const activeTabs = await browser.tabs.query({
+	const activeTabs = await ext.tabs.query({
 		windowId,
 		active: true,
 	});
@@ -25,7 +26,7 @@ async function reapplyForWindow(windowId) {
 }
 
 async function reapplyForLastFocusedWindow() {
-	const activeTabs = await browser.tabs.query({
+	const activeTabs = await ext.tabs.query({
 		active: true,
 		lastFocusedWindow: true,
 	});
@@ -40,8 +41,8 @@ async function reapplyForLastFocusedWindow() {
 	});
 }
 
-browser.runtime.onInstalled.addListener(async () => {
-	const state = await browser.storage.local.get(["enabled", "sortSide"]);
+ext.runtime.onInstalled.addListener(async () => {
+	const state = await ext.storage.local.get(["enabled", "sortSide"]);
 	const nextState = {};
 
 	if (typeof state.enabled !== "boolean") {
@@ -53,11 +54,11 @@ browser.runtime.onInstalled.addListener(async () => {
 	}
 
 	if (Object.keys(nextState).length > 0) {
-		await browser.storage.local.set(nextState);
+		await ext.storage.local.set(nextState);
 	}
 });
 
-browser.runtime.onMessage.addListener((message) => {
+ext.runtime.onMessage.addListener((message) => {
 	if (!message || typeof message !== "object") {
 		return undefined;
 	}
@@ -68,7 +69,7 @@ browser.runtime.onMessage.addListener((message) => {
 
 	if (message.type === "tab-recency:set-enabled") {
 		const nextEnabled = message.enabled !== false;
-		return browser.storage.local.set({ enabled: nextEnabled }).then(() => nextEnabled);
+		return ext.storage.local.set({ enabled: nextEnabled }).then(() => nextEnabled);
 	}
 
 	if (message.type === "tab-recency:get-settings") {
@@ -77,7 +78,7 @@ browser.runtime.onMessage.addListener((message) => {
 
 	if (message.type === "tab-recency:set-sort-side") {
 		const nextSortSide = message.sortSide === "end" ? "end" : "start";
-		return browser.storage.local.set({ sortSide: nextSortSide }).then(async () => {
+		return ext.storage.local.set({ sortSide: nextSortSide }).then(async () => {
 			if (typeof message.windowId === "number") {
 				await reapplyForWindow(message.windowId);
 			} else {
@@ -105,18 +106,18 @@ async function applyRecency(activeInfo) {
 			return;
 		}
 
-		const activeTab = await browser.tabs.get(activeInfo.tabId);
+		const activeTab = await ext.tabs.get(activeInfo.tabId);
 
 		if (activeTab.pinned) {
 			return;
 		}
 
-		const pinnedTabs = await browser.tabs.query({
+		const pinnedTabs = await ext.tabs.query({
 			windowId,
 			pinned: true,
 		});
 
-		const unpinnedTabs = await browser.tabs.query({
+		const unpinnedTabs = await ext.tabs.query({
 			windowId,
 			pinned: false,
 		});
@@ -129,9 +130,9 @@ async function applyRecency(activeInfo) {
 
 		if (isGrouped) {
 			const sourceGroupId = activeTab.groupId;
-			const groupMetadata = await browser.tabGroups.get(sourceGroupId);
+			const groupMetadata = await ext.tabGroups.get(sourceGroupId);
 
-			const groupTabs = await browser.tabs.query({
+			const groupTabs = await ext.tabs.query({
 				windowId,
 				groupId: sourceGroupId,
 			});
@@ -141,9 +142,9 @@ async function applyRecency(activeInfo) {
 				...groupTabs.filter((t) => t.id !== activeTab.id).map((t) => t.id),
 			];
 
-			await browser.tabs.move(sortedIds, { index: targetIndex });
+			await ext.tabs.move(sortedIds, { index: targetIndex });
 
-			const newGroupId = await browser.tabs.group({
+			const newGroupId = await ext.tabs.group({
 				tabIds: sortedIds,
 			});
 
@@ -156,22 +157,22 @@ async function applyRecency(activeInfo) {
 				nextGroupState.collapsed = groupMetadata.collapsed;
 			}
 
-			await browser.tabGroups.update(newGroupId, nextGroupState);
+			await ext.tabGroups.update(newGroupId, nextGroupState);
 		} else {
 			const loneTargetIndex = shouldMoveToEnd ? endIndex : startIndex;
 			if (activeTab.index === loneTargetIndex) {
 				return;
 			}
 
-			await browser.tabs.move(activeTab.id, {
+			await ext.tabs.move(activeTab.id, {
 				index: targetIndex,
 			});
 
 			// If this move merged into an edge group, pull the tab back out.
-			const movedTab = await browser.tabs.get(activeTab.id);
+			const movedTab = await ext.tabs.get(activeTab.id);
 
 			if (movedTab.groupId !== -1) {
-				await browser.tabs.ungroup(activeTab.id);
+				await ext.tabs.ungroup(activeTab.id);
 			}
 		}
 	} catch (error) {
@@ -181,4 +182,4 @@ async function applyRecency(activeInfo) {
 	}
 }
 
-browser.tabs.onActivated.addListener(applyRecency);
+ext.tabs.onActivated.addListener(applyRecency);

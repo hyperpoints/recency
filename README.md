@@ -1,12 +1,29 @@
 # recency
 
-Firefox extension that keeps your most recently activated tab (or tab group) at the top of the unpinned stack.
+WebExtension that keeps your most recently activated tab (or tab group) at the edge of the unpinned stack.
+
+## Multi-browser build
+
+This repo now builds separate extension bundles for Firefox, Chrome, and Safari from the same source files.
+
+Run from the project root:
+
+- `npm run build` to build all targets.
+- `npm run build:firefox` to build only Firefox.
+- `npm run build:chrome` to build only Chrome.
+- `npm run build:safari` to build only Safari.
+
+Build output folders:
+
+- `dist/firefox`
+- `dist/chrome`
+- `dist/safari`
 
 ## Current behavior
 
 - Pinned tabs are never moved.
-- Activating a grouped tab moves its whole group to the top of unpinned tabs.
-- Activating a lone tab moves it to the top of unpinned tabs.
+- Activating a grouped tab moves its whole group to the selected side of unpinned tabs.
+- Activating a lone tab moves it to the selected side of unpinned tabs.
 - If a lone tab gets merged into a group while moving, it is immediately ungrouped.
 
 ## Quick toggle

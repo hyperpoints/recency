@@ -1,3 +1,4 @@
+const ext = globalThis.browser ?? globalThis.chrome;
 const toggle = document.getElementById("enabled-toggle");
 const sortSide = document.getElementById("sort-side");
 const statusText = document.getElementById("status");
@@ -8,7 +9,7 @@ function setStatus(message) {
 
 async function loadState() {
 	try {
-		const settings = await browser.runtime.sendMessage({
+		const settings = await ext.runtime.sendMessage({
 			type: "tab-recency:get-settings",
 		});
 
@@ -25,7 +26,7 @@ toggle.addEventListener("change", async () => {
 	toggle.disabled = true;
 
 	try {
-		const enabled = await browser.runtime.sendMessage({
+		const enabled = await ext.runtime.sendMessage({
 			type: "tab-recency:set-enabled",
 			enabled: toggle.checked,
 		});
@@ -44,8 +45,8 @@ sortSide.addEventListener("change", async () => {
 	sortSide.disabled = true;
 
 	try {
-		const currentWindow = await browser.windows.getCurrent();
-		const nextSortSide = await browser.runtime.sendMessage({
+		const currentWindow = await ext.windows.getCurrent();
+		const nextSortSide = await ext.runtime.sendMessage({
 			type: "tab-recency:set-sort-side",
 			sortSide: sortSide.value,
 			windowId: currentWindow.id,

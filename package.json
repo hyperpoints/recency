@@ -1,0 +1,12 @@
+{
+	"name": "tab-recency",
+	"version": "1.4.0",
+	"private": true,
+	"description": "Multi-browser build pipeline for Tab Recency extension",
+	"scripts": {
+		"build": "node scripts/build.mjs",
+		"build:firefox": "node scripts/build.mjs firefox",
+		"build:chrome": "node scripts/build.mjs chrome",
+		"build:safari": "node scripts/build.mjs safari"
+	}
+}
