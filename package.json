@@ -10,6 +10,7 @@
 		"build:chrome": "node scripts/build.mjs chrome",
 		"build:safari": "node scripts/build.mjs safari",
 		"zip": "node scripts/zip.mjs",
+		"source:zip": "node scripts/source-zip.mjs",
 		"zip:firefox": "node scripts/zip.mjs firefox",
 		"zip:chrome": "node scripts/zip.mjs chrome",
 		"zip:safari": "node scripts/zip.mjs safari",
