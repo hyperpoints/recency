@@ -36,10 +36,11 @@ function manifestForTarget(target) {
 	return manifest;
 }
 
-rmSync(distRoot, { recursive: true, force: true });
+mkdirSync(distRoot, { recursive: true });
 
 for (const target of targets) {
 	const outDir = path.join(distRoot, target);
+	rmSync(outDir, { recursive: true, force: true });
 	mkdirSync(outDir, { recursive: true });
 
 	for (const file of sharedFiles) {

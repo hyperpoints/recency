@@ -9,9 +9,12 @@ This repo now builds separate extension bundles for Firefox, Chrome, and Safari 
 Run from the project root:
 
 - `npm run build` to build all targets.
+- `npm run build:all` to build all targets.
 - `npm run build:firefox` to build only Firefox.
 - `npm run build:chrome` to build only Chrome.
 - `npm run build:safari` to build only Safari.
+
+Single-target builds only refresh that target under `dist/` and keep other targets intact.
 
 To generate zip archives for store upload:
 
