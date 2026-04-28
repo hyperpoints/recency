@@ -37,6 +37,11 @@ Single-target builds only refresh that target under dist and keep other targets 
 - Build outputs: `dist/firefox`, `dist/chrome`, `dist/safari`.
 - Zip outputs: `artifacts/firefox.zip`, `artifacts/chrome.zip`, `artifacts/safari.zip`.
 
+### Icons
+
+- Source artwork: `icons/icon.svg`.
+- Generated PNG sizes: `icons/icon-16.png`, `icons/icon-32.png`, `icons/icon-48.png`, `icons/icon-64.png`, `icons/icon-96.png`, `icons/icon-128.png`, `icons/icon-256.png`, `icons/icon-512.png`.
+
 ## Current behavior
 
 - Pinned tabs are never moved.

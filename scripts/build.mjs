@@ -1,4 +1,12 @@
-import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+	cpSync,
+	existsSync,
+	mkdirSync,
+	readFileSync,
+	rmSync,
+	statSync,
+	writeFileSync,
+} from "node:fs";
 import path from "node:path";
 
 const repoRoot = process.cwd();
@@ -15,7 +23,7 @@ if (requestedTarget && !allTargets.includes(requestedTarget)) {
 
 const baseManifestPath = path.join(repoRoot, "manifest.json");
 const baseManifest = JSON.parse(readFileSync(baseManifestPath, "utf8"));
-const sharedFiles = ["background.js", "popup.html", "popup.js", "popup.css"];
+const sharedFiles = ["background.js", "popup.html", "popup.js", "popup.css", "icons"];
 
 function manifestForTarget(target) {
 	const manifest = structuredClone(baseManifest);
@@ -49,7 +57,12 @@ for (const target of targets) {
 			console.error(`Missing source file: ${file}`);
 			process.exit(1);
 		}
-		cpSync(from, path.join(outDir, file));
+
+		if (statSync(from).isDirectory()) {
+			cpSync(from, path.join(outDir, file), { recursive: true });
+		} else {
+			cpSync(from, path.join(outDir, file));
+		}
 	}
 
 	const manifest = manifestForTarget(target);
