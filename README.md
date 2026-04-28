@@ -51,6 +51,19 @@ When AMO asks for source code, upload `artifacts/source.zip`.
 - Node.js: 18 or newer.
 - npm: 9 or newer.
 
+### Program installation and version checks
+
+1. Install Node.js (includes npm):
+	- Download installer from https://nodejs.org/ (LTS recommended), or install via your system package manager.
+2. Ensure `zip` is installed:
+	- macOS: preinstalled in default environments.
+	- Linux: install package `zip` using your distro package manager.
+	- Windows: use Git Bash/WSL or any environment that provides a POSIX-compatible `zip` command.
+3. Verify required versions:
+	- `node --version` should report v18 or newer.
+	- `npm --version` should report v9 or newer.
+	- `zip -v` should run successfully.
+
 ### Build scripts used
 
 - `scripts/build.mjs` creates browser-specific build folders in `dist`.
