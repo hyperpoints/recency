@@ -6,6 +6,8 @@ WebExtension that keeps your most recently activated tab (or tab group) at the e
 
 This repo now builds separate extension bundles for Firefox, Chrome, and Safari from the same source files.
 
+Store listing and reviewer text templates are in STORE_LISTING_COPY.md.
+
 Run from the project root.
 
 ### Quick start
