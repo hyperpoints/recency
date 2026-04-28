@@ -7,6 +7,14 @@
 		"build": "node scripts/build.mjs",
 		"build:firefox": "node scripts/build.mjs firefox",
 		"build:chrome": "node scripts/build.mjs chrome",
-		"build:safari": "node scripts/build.mjs safari"
+		"build:safari": "node scripts/build.mjs safari",
+		"zip": "node scripts/zip.mjs",
+		"zip:firefox": "node scripts/zip.mjs firefox",
+		"zip:chrome": "node scripts/zip.mjs chrome",
+		"zip:safari": "node scripts/zip.mjs safari",
+		"package": "npm run build && npm run zip",
+		"package:firefox": "npm run build:firefox && npm run zip:firefox",
+		"package:chrome": "npm run build:chrome && npm run zip:chrome",
+		"package:safari": "npm run build:safari && npm run zip:safari"
 	}
 }

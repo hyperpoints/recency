@@ -13,11 +13,29 @@ Run from the project root:
 - `npm run build:chrome` to build only Chrome.
 - `npm run build:safari` to build only Safari.
 
+To generate zip archives for store upload:
+
+- `npm run zip` to zip all current dist targets.
+- `npm run zip:firefox` to zip only Firefox.
+- `npm run zip:chrome` to zip only Chrome.
+- `npm run zip:safari` to zip only Safari.
+
+One-shot build + zip commands:
+
+- `npm run package`
+- `npm run package:firefox`
+- `npm run package:chrome`
+- `npm run package:safari`
+
 Build output folders:
 
 - `dist/firefox`
 - `dist/chrome`
 - `dist/safari`
+
+Archive output folder:
+
+- `artifacts`
 
 ## Current behavior
 
