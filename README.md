@@ -57,3 +57,7 @@ Use Sort Side in the popup to choose where recent tabs/groups move:
 
 - Left / Top: moves to the start of unpinned tabs.
 - Right / Bottom: moves to the end of unpinned tabs.
+
+## Privacy
+
+For Firefox distribution, the manifest declares no data collection using `browser_specific_settings.gecko.data_collection_permissions.required = ["none"]`.
