@@ -29,11 +29,17 @@ function manifestForTarget(target) {
 	const manifest = structuredClone(baseManifest);
 
 	if (target === "firefox") {
+		const gecko = {
+			...(baseManifest.browser_specific_settings?.gecko ?? {}),
+		};
+
+		if (!gecko.id) {
+			gecko.id = "move-tab-top@yourname.dev";
+		}
+
 		manifest.background = { scripts: ["background.js"] };
 		manifest.browser_specific_settings = {
-			gecko: {
-				id: baseManifest.browser_specific_settings?.gecko?.id ?? "move-tab-top@yourname.dev",
-			},
+			gecko,
 		};
 		return manifest;
 	}
