@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tab Recency</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <main class="panel">
+    <h1>Tab Recency</h1>
+    <label class="row" for="enabled-toggle">
+      <span>Enabled</span>
+      <input id="enabled-toggle" type="checkbox" role="switch" aria-label="Enable Tab Recency">
+    </label>
+    <label class="row" for="sort-side">
+      <span>Sort Side</span>
+      <select id="sort-side" aria-label="Sort side">
+        <option value="start">Left / Top</option>
+        <option value="end">Right / Bottom</option>
+      </select>
+    </label>
+    <p id="status" class="status" aria-live="polite">Loading...</p>
+  </main>
+  <script src="popup.js"></script>
+</body>
+
+</html>

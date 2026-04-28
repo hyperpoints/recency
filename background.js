@@ -1,14 +1,27 @@
 const inFlightByWindow = new Set();
 
-async function isEnabled() {
-	const { enabled = true } = await browser.storage.local.get("enabled");
-	return enabled !== false;
+async function getSettings() {
+	const state = await browser.storage.local.get(["enabled", "sortSide"]);
+	return {
+		enabled: state.enabled !== false,
+		sortSide: state.sortSide === "end" ? "end" : "start",
+	};
 }
 
 browser.runtime.onInstalled.addListener(async () => {
-	const state = await browser.storage.local.get("enabled");
+	const state = await browser.storage.local.get(["enabled", "sortSide"]);
+	const nextState = {};
+
 	if (typeof state.enabled !== "boolean") {
-		await browser.storage.local.set({ enabled: true });
+		nextState.enabled = true;
+	}
+
+	if (state.sortSide !== "start" && state.sortSide !== "end") {
+		nextState.sortSide = "start";
+	}
+
+	if (Object.keys(nextState).length > 0) {
+		await browser.storage.local.set(nextState);
 	}
 });
 
@@ -18,12 +31,21 @@ browser.runtime.onMessage.addListener((message) => {
 	}
 
 	if (message.type === "tab-recency:get-enabled") {
-		return isEnabled();
+		return getSettings().then((settings) => settings.enabled);
 	}
 
 	if (message.type === "tab-recency:set-enabled") {
 		const nextEnabled = message.enabled !== false;
 		return browser.storage.local.set({ enabled: nextEnabled }).then(() => nextEnabled);
+	}
+
+	if (message.type === "tab-recency:get-settings") {
+		return getSettings();
+	}
+
+	if (message.type === "tab-recency:set-sort-side") {
+		const nextSortSide = message.sortSide === "end" ? "end" : "start";
+		return browser.storage.local.set({ sortSide: nextSortSide }).then(() => nextSortSide);
 	}
 
 	return undefined;
@@ -39,7 +61,8 @@ browser.tabs.onActivated.addListener(async (activeInfo) => {
 	inFlightByWindow.add(windowId);
 
 	try {
-		if (!(await isEnabled())) {
+		const settings = await getSettings();
+		if (!settings.enabled) {
 			return;
 		}
 
@@ -54,7 +77,15 @@ browser.tabs.onActivated.addListener(async (activeInfo) => {
 			pinned: true,
 		});
 
-		const targetIndex = pinnedTabs.length;
+		const unpinnedTabs = await browser.tabs.query({
+			windowId,
+			pinned: false,
+		});
+
+		const startIndex = pinnedTabs.length;
+		const endIndex = startIndex + unpinnedTabs.length - 1;
+		const shouldMoveToEnd = settings.sortSide === "end";
+		const targetIndex = shouldMoveToEnd ? -1 : startIndex;
 		const isGrouped = activeTab.groupId !== -1;
 
 		if (isGrouped) {
@@ -87,12 +118,17 @@ browser.tabs.onActivated.addListener(async (activeInfo) => {
 			}
 
 			await browser.tabGroups.update(newGroupId, nextGroupState);
-		} else if (activeTab.index !== targetIndex) {
+		} else {
+			const loneTargetIndex = shouldMoveToEnd ? endIndex : startIndex;
+			if (activeTab.index === loneTargetIndex) {
+				return;
+			}
+
 			await browser.tabs.move(activeTab.id, {
 				index: targetIndex,
 			});
 
-			// If this move merged into the top group, pull the tab back out.
+			// If this move merged into an edge group, pull the tab back out.
 			const movedTab = await browser.tabs.get(activeTab.id);
 
 			if (movedTab.groupId !== -1) {
