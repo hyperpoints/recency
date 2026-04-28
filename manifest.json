@@ -1,0 +1,14 @@
+{
+	"manifest_version": 3,
+	"name": "Tab Recency",
+	"version": "1.1",
+	"permissions": ["tabs", "tabGroups"],
+	"background": {
+		"scripts": ["background.js"]
+	},
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "move-tab-top@yourname.dev"
+		}
+	}
+}
