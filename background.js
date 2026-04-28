@@ -8,6 +8,38 @@ async function getSettings() {
 	};
 }
 
+async function reapplyForWindow(windowId) {
+	const activeTabs = await browser.tabs.query({
+		windowId,
+		active: true,
+	});
+
+	if (!activeTabs[0]) {
+		return;
+	}
+
+	await applyRecency({
+		tabId: activeTabs[0].id,
+		windowId,
+	});
+}
+
+async function reapplyForLastFocusedWindow() {
+	const activeTabs = await browser.tabs.query({
+		active: true,
+		lastFocusedWindow: true,
+	});
+
+	if (!activeTabs[0]) {
+		return;
+	}
+
+	await applyRecency({
+		tabId: activeTabs[0].id,
+		windowId: activeTabs[0].windowId,
+	});
+}
+
 browser.runtime.onInstalled.addListener(async () => {
 	const state = await browser.storage.local.get(["enabled", "sortSide"]);
 	const nextState = {};
@@ -45,13 +77,20 @@ browser.runtime.onMessage.addListener((message) => {
 
 	if (message.type === "tab-recency:set-sort-side") {
 		const nextSortSide = message.sortSide === "end" ? "end" : "start";
-		return browser.storage.local.set({ sortSide: nextSortSide }).then(() => nextSortSide);
+		return browser.storage.local.set({ sortSide: nextSortSide }).then(async () => {
+			if (typeof message.windowId === "number") {
+				await reapplyForWindow(message.windowId);
+			} else {
+				await reapplyForLastFocusedWindow();
+			}
+			return nextSortSide;
+		});
 	}
 
 	return undefined;
 });
 
-browser.tabs.onActivated.addListener(async (activeInfo) => {
+async function applyRecency(activeInfo) {
 	const windowId = activeInfo.windowId;
 
 	if (inFlightByWindow.has(windowId)) {
@@ -140,4 +179,6 @@ browser.tabs.onActivated.addListener(async (activeInfo) => {
 	} finally {
 		inFlightByWindow.delete(windowId);
 	}
-});
+}
+
+browser.tabs.onActivated.addListener(applyRecency);

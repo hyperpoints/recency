@@ -44,9 +44,11 @@ sortSide.addEventListener("change", async () => {
 	sortSide.disabled = true;
 
 	try {
+		const currentWindow = await browser.windows.getCurrent();
 		const nextSortSide = await browser.runtime.sendMessage({
 			type: "tab-recency:set-sort-side",
 			sortSide: sortSide.value,
+			windowId: currentWindow.id,
 		});
 
 		sortSide.value = nextSortSide === "end" ? "end" : "start";
