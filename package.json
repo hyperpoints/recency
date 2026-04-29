@@ -1,8 +1,8 @@
 {
-	"name": "tab-stack",
+	"name": "recency",
 	"version": "1.5.0",
 	"private": true,
-	"description": "Multi-browser build pipeline for Tab Stack extension",
+	"description": "Multi-browser build pipeline for the Recency extension",
 	"scripts": {
 		"build": "npm run build:all",
 		"build:all": "node scripts/build.mjs",

@@ -1,6 +1,6 @@
 {
 	"manifest_version": 3,
-	"name": "Tab Stack",
+	"name": "Recency",
 	"version": "1.5.0",
 	"icons": {
 		"16": "icons/icon-16.png",
@@ -14,7 +14,7 @@
 		"scripts": ["background.js"]
 	},
 	"action": {
-		"default_title": "Tab Stack",
+		"default_title": "Recency",
 		"default_popup": "popup.html",
 		"default_icon": {
 			"16": "icons/icon-16.png",
@@ -25,7 +25,7 @@
 	},
 	"browser_specific_settings": {
 		"gecko": {
-			"id": "move-tab-top@yourname.dev",
+			"id": "recency@hyperpoints.dev",
 			"data_collection_permissions": {
 				"required": ["none"]
 			}
