@@ -25,7 +25,7 @@
 	},
 	"browser_specific_settings": {
 		"gecko": {
-			"id": "move-tab-top@yourname.dev",
+			"id": "tab-stack@hyperpoints.dev",
 			"data_collection_permissions": {
 				"required": ["none"]
 			}

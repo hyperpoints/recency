@@ -34,7 +34,7 @@ function manifestForTarget(target) {
 		};
 
 		if (!gecko.id) {
-			gecko.id = "move-tab-top@yourname.dev";
+			gecko.id = "tab-stack@hyperpoints.dev";
 		}
 
 		manifest.background = { scripts: ["background.js"] };

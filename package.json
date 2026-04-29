@@ -17,6 +17,7 @@
 		"package": "npm run build:all && npm run zip",
 		"package:firefox": "npm run build:firefox && npm run zip:firefox",
 		"package:chrome": "npm run build:chrome && npm run zip:chrome",
-		"package:safari": "npm run build:safari && npm run zip:safari"
+		"package:safari": "npm run build:safari && npm run zip:safari",
+		"package:all": "npm run build:all && npm run zip"
 	}
 }
