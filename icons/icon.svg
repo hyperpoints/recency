@@ -1,30 +1,50 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none"
   xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="24" y1="20" x2="488" y2="492" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#1A2650"/>
-      <stop offset="1" stop-color="#0B1226"/>
+    <linearGradient id="shell" x1="42" y1="28" x2="472" y2="486" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18204C"/>
+      <stop offset="0.52" stop-color="#0A1738"/>
+      <stop offset="1" stop-color="#050A1D"/>
     </linearGradient>
-    <linearGradient id="tab" x1="114" y1="118" x2="392" y2="388" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#9ED9FF"/>
-      <stop offset="1" stop-color="#4FAFFF"/>
+    <linearGradient id="edge" x1="76" y1="36" x2="454" y2="458" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E6F7FF"/>
+      <stop offset="0.46" stop-color="#57D7FF"/>
+      <stop offset="1" stop-color="#6487FF"/>
     </linearGradient>
-    <linearGradient id="spark" x1="178" y1="94" x2="420" y2="330" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFF8A6"/>
-      <stop offset="1" stop-color="#FFBE47"/>
+    <linearGradient id="tab" x1="106" y1="104" x2="408" y2="406" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#BFF4FF"/>
+      <stop offset="0.52" stop-color="#39C8FF"/>
+      <stop offset="1" stop-color="#6A7BFF"/>
     </linearGradient>
+    <linearGradient id="signal" x1="112" y1="386" x2="414" y2="98" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#67FFB8"/>
+      <stop offset="0.46" stop-color="#62E7FF"/>
+      <stop offset="1" stop-color="#FFE66D"/>
+    </linearGradient>
+    <filter id="glow" x="42" y="38" width="432" height="436" color-interpolation-filters="sRGB">
+      <feFlood flood-color="#58DFFF" flood-opacity="0.5"/>
+      <feComposite in2="SourceAlpha" operator="in"/>
+      <feGaussianBlur stdDeviation="13"/>
+      <feBlend in="SourceGraphic"/>
+    </filter>
   </defs>
 
-  <rect x="10" y="10" width="492" height="492" rx="124" fill="url(#bg)"/>
-  <rect x="10" y="10" width="492" height="492" rx="124" stroke="#EFF5FF" stroke-opacity="0.82" stroke-width="12"/>
-  <rect x="24" y="24" width="464" height="464" rx="114" stroke="#050915" stroke-opacity="0.56" stroke-width="7"/>
+  <rect x="2" y="2" width="508" height="508" rx="112" fill="url(#shell)"/>
+  <rect x="7" y="7" width="498" height="498" rx="108" stroke="url(#edge)" stroke-width="14"/>
+  <path d="M81 131V83H129" stroke="#89ECFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity="0.88"/>
+  <path d="M431 381V429H383" stroke="#FFD86D" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+  <path d="M92 390H151L187 354H246" stroke="url(#signal)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.72"/>
+  <path d="M421 124H360L327 157H269" stroke="url(#signal)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.66"/>
 
-  <rect x="114" y="202" width="200" height="142" rx="26" fill="none" stroke="url(#tab)" stroke-width="20" opacity="0.54"/>
-  <rect x="160" y="152" width="224" height="160" rx="28" fill="none" stroke="url(#tab)" stroke-width="24"/>
-  <rect x="196" y="192" width="136" height="20" rx="10" fill="url(#tab)" opacity="0.98"/>
-  <rect x="196" y="230" width="96" height="20" rx="10" fill="url(#tab)" opacity="0.91"/>
+  <g filter="url(#glow)">
+    <rect x="88" y="194" width="238" height="174" rx="30" fill="#081126" stroke="url(#tab)" stroke-width="30"/>
+    <rect x="150" y="132" width="270" height="194" rx="32" fill="#0A1430" stroke="url(#tab)" stroke-width="34"/>
+    <path d="M205 199H326" stroke="#E6FBFF" stroke-width="24" stroke-linecap="round"/>
+    <path d="M205 248H286" stroke="#78E6FF" stroke-width="24" stroke-linecap="round"/>
+    <path d="M326 326L393 393" stroke="url(#signal)" stroke-width="28" stroke-linecap="round"/>
+    <circle cx="408" cy="408" r="35" fill="#091329" stroke="url(#signal)" stroke-width="18"/>
+  </g>
 
-  <path d="M364 72L380 114L422 130L380 146L364 188L348 146L306 130L348 114L364 72Z" fill="url(#spark)"/>
-  <path d="M428 186L437 210L461 219L437 228L428 252L419 228L395 219L419 210L428 186Z" fill="url(#spark)" opacity="0.96"/>
-  <path d="M132 98L141 122L165 131L141 140L132 164L123 140L99 131L123 122L132 98Z" fill="url(#spark)" opacity="0.89"/>
+  <path d="M376 57L391 98L432 113L391 128L376 169L361 128L320 113L361 98L376 57Z" fill="#FFE66D"/>
+  <path d="M115 96L124 119L147 128L124 137L115 160L106 137L83 128L106 119L115 96Z" fill="#65FFBD" opacity="0.92"/>
 </svg>
