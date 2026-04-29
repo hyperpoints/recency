@@ -19,7 +19,7 @@ async function reapplyForWindow(windowId) {
 		return;
 	}
 
-	await applyRecency({
+	await applyTabStack({
 		tabId: activeTabs[0].id,
 		windowId,
 	});
@@ -35,7 +35,7 @@ async function reapplyForLastFocusedWindow() {
 		return;
 	}
 
-	await applyRecency({
+	await applyTabStack({
 		tabId: activeTabs[0].id,
 		windowId: activeTabs[0].windowId,
 	});
@@ -63,20 +63,20 @@ ext.runtime.onMessage.addListener((message) => {
 		return undefined;
 	}
 
-	if (message.type === "tab-recency:get-enabled") {
+	if (message.type === "tab-stack:get-enabled") {
 		return getSettings().then((settings) => settings.enabled);
 	}
 
-	if (message.type === "tab-recency:set-enabled") {
+	if (message.type === "tab-stack:set-enabled") {
 		const nextEnabled = message.enabled !== false;
 		return ext.storage.local.set({ enabled: nextEnabled }).then(() => nextEnabled);
 	}
 
-	if (message.type === "tab-recency:get-settings") {
+	if (message.type === "tab-stack:get-settings") {
 		return getSettings();
 	}
 
-	if (message.type === "tab-recency:set-sort-side") {
+	if (message.type === "tab-stack:set-sort-side") {
 		const nextSortSide = message.sortSide === "end" ? "end" : "start";
 		return ext.storage.local.set({ sortSide: nextSortSide }).then(async () => {
 			if (typeof message.windowId === "number") {
@@ -91,7 +91,7 @@ ext.runtime.onMessage.addListener((message) => {
 	return undefined;
 });
 
-async function applyRecency(activeInfo) {
+async function applyTabStack(activeInfo) {
 	const windowId = activeInfo.windowId;
 
 	if (inFlightByWindow.has(windowId)) {
@@ -182,4 +182,4 @@ async function applyRecency(activeInfo) {
 	}
 }
 
-ext.tabs.onActivated.addListener(applyRecency);
+ext.tabs.onActivated.addListener(applyTabStack);

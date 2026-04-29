@@ -1,4 +1,4 @@
-# recency
+# Tab Stack
 
 WebExtension that keeps your most recently activated tab (or tab group) at the edge of the unpinned stack.
 
@@ -98,7 +98,7 @@ When AMO asks for source code, upload `artifacts/source.zip`.
 
 ## Quick toggle
 
-Use the toolbar popup and switch Enabled on/off to pause or resume recency behavior.
+Use the toolbar popup and switch Enabled on/off to pause or resume Tab Stack behavior.
 
 Use Sort Side in the popup to choose where recent tabs/groups move:
 

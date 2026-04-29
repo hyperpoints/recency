@@ -1,6 +1,6 @@
 {
 	"manifest_version": 3,
-	"name": "Tab Recency",
+	"name": "Tab Stack",
 	"version": "1.5",
 	"icons": {
 		"16": "icons/icon-16.png",
@@ -14,7 +14,7 @@
 		"scripts": ["background.js"]
 	},
 	"action": {
-		"default_title": "Tab Recency",
+		"default_title": "Tab Stack",
 		"default_popup": "popup.html",
 		"default_icon": {
 			"16": "icons/icon-16.png",

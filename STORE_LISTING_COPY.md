@@ -6,7 +6,7 @@ Reusable listing and review text for Firefox AMO, Chrome Web Store, and Safari d
 Keep your most recent tabs and tab groups at the edge of the tab strip, with one-click control over left/top or right/bottom sorting.
 
 ## Universal full description
-Tab Recency keeps your active tabs easy to reach by automatically moving the currently selected tab, or its tab group, to your chosen side of the unpinned tab area.
+Tab Stack keeps your active tabs easy to reach by automatically moving the currently selected tab, or its tab group, to your chosen side of the unpinned tab area.
 
 What it does:
 - Moves the active unpinned tab to the selected edge.
@@ -19,7 +19,7 @@ What it does:
 Why people use it:
 - Faster tab switching in large tab sets.
 - Less manual dragging.
-- Predictable recency-based tab placement.
+- Predictable recent-tab placement.
 
 Privacy:
 - No account.
@@ -60,7 +60,7 @@ Implementation notes:
 Move active tabs and tab groups to your chosen edge of the tab strip.
 
 ### Description
-Tab Recency automatically keeps your most recent tabs within easy reach.
+Tab Stack automatically keeps your most recent tabs within easy reach.
 
 - Moves the active unpinned tab to your selected side.
 - Moves active tab groups together.
@@ -77,10 +77,10 @@ This extension processes tab state locally to reorder tabs and groups. It does n
 
 ## Safari listing copy
 ### Summary
-Recency-based tab and tab-group ordering with side selection.
+Recent-tab and tab-group ordering with side selection.
 
 ### Description
-Tab Recency keeps active tabs and groups near the edge you choose, so switching context stays fast without manual tab dragging.
+Tab Stack keeps active tabs and groups near the edge you choose, so switching context stays fast without manual tab dragging.
 
 Key points:
 - Active tab or active group moves to chosen side.
